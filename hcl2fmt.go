@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+//	http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,15 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"path/filepath"
+
 	"github.com/hashicorp/hcl/v2/hclparse"
 	"github.com/hashicorp/hcl/v2/hclwrite"
 	"github.com/mattn/go-zglob"
-	"io/ioutil"
-	"os"
-	"path/filepath"
 )
 
-const Version = "0.1.0"
+const Version = "0.1.1"
 
 var (
 	version    = flag.Bool("v", false, "version information")
@@ -61,10 +61,10 @@ func realMain() error {
 					fmt.Println(err)
 					break
 				}
-				if contents, err := ioutil.ReadFile(fname); err == nil {
+				if contents, err := os.ReadFile(fname); err == nil {
 					newContents := hclwrite.Format(contents)
 					fmt.Println(fname)
-					if err := ioutil.WriteFile(fname, newContents, stat.Mode()); err != nil {
+					if err := os.WriteFile(fname, newContents, stat.Mode()); err != nil {
 						fmt.Println("Unable to write file %s (%s)", fname, err)
 					}
 				} else {
